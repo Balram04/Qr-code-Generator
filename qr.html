@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .glow-border {
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      box-shadow: 0 0 0 2px rgba(147, 51, 234, 0.4), 0 0 10px rgba(147, 51, 234, 0.3);
+      transition: all 0.4s ease;
+    }
+
+    .glow-border:hover {
+      box-shadow: 0 0 15px rgba(139, 92, 246, 0.8), 0 0 20px rgba(139, 92, 246, 0.6);
+      transform: scale(1.02);
+    }
+
+    .ripple {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ripple::after {
+      content: "";
+      position: absolute;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 100%;
+      width: 100px;
+      height: 100px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      transition: all 0.5s ease-out;
+    }
+
+    .ripple:active::after {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 1;
+      transition: 0s;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-100 to-purple-300 flex items-center justify-center p-4">
+
+  <div class="bg-white/80 backdrop-blur-xl shadow-2xl p-8 rounded-3xl w-full max-w-md text-center space-y-6 fade-in">
+
+    <h1 class="text-4xl font-bold text-purple-900 tracking-wide">✨ QR Code Generator</h1>
+
+    <input 
+      id="qrInput" 
+      type="text" 
+      placeholder="Paste your text or link here..." 
+      class="w-full px-5 py-3 text-lg rounded-xl focus:outline-none transition glow-border"
+    />
+
+    <div id="qrBox" class="mt-6 fade-in">
+        <img 
+            id="qrImage" 
+            src="" 
+            alt="QR Code will appear here" 
+            class="mx-auto max-w-full h-auto rounded-lg shadow-lg hidden"
+        />
+        <p id="errorMessage" class="text-red-500 hidden">Please enter a valid text or link.</p>
+
+    </div>
+
+    <button 
+      id="generateBtn" 
+      class="ripple bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-xl text-lg font-semibold glow-border"
+    >
+      🚀 Generate QR
+    </button>
+
+    <p class="text-sm text-gray-700">Powered by <a href="https://goqr.me/api/" target="_blank" class="text-purple-800 underline">GoQR API</a></p>
+  </div>
+<script src="qr.js"></script>
+</body>
+</html>
